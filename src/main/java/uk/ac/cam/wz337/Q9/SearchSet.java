@@ -6,9 +6,10 @@ public class SearchSet {
 
     public SearchSet() {
         mElements = 0;
+        mHead = null;
     }
 
-    public void insert(int value, BinaryTreeNode currentNode) {
+    private void insert(int value, BinaryTreeNode currentNode) {
         BinaryTreeNode downNode;
         if (value < currentNode.getValue()) {
             if (currentNode.getLeft() == null) {
@@ -32,6 +33,30 @@ public class SearchSet {
         } else {
             insert(value, mHead);
         }
+        mElements++;
     }
 
+    public int getNumberElements() {
+        return mElements;
+    }
+
+    private boolean contains(int value, BinaryTreeNode currentNode) {
+        if (currentNode == null) {
+            return false;
+        } else if (value == currentNode.getValue()) {
+            return true;
+        } else if (value < currentNode.getValue()) {
+            return contains(value, currentNode.getLeft());
+        } else {
+            return contains(value, currentNode.getRight());
+        }
+    }
+
+    public boolean contains(int value) {
+        return contains(value, mHead);
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Testing SearchSet");
+    }
 }
